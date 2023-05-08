@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+void iniciarPrograma();
+void ingresarInforme();
+void calcularPorcentaje();
+void mostrarInforme();
+
+const char* verLugar(int);
+const char* verVacuna(int);
+
+float porcentaje;
+int i = 1;
+int dni, edad;
+int vacuna, nroDosis;
+int lugarVacunacion;
+int contGripe;
+int contMenores;
+int contMenoresVacuna;
+int contCovid;
+
+char resp;
+
+int main() {
+    iniciarPrograma();
+    ingresarInforme();
+    calcularPorcentaje();
+    mostrarInforme();
+    return 0;
+}
+
+void iniciarPrograma() {
+    printf("*MINISTERIO DE LA SALUD DE LA PROVINCIA DE CORRIENTES*\n\n");
+    printf("DESEA INGRESAR UN INFORME?\n");
+    printf("(s -SI)  (n -No)\n\n");
+    printf("INGRESE AQUI: ");
+    char input[2];
+    fgets(input, sizeof(input), stdin);
+    sscanf(input, " %c", &resp);
+    system("clear");
+}
+
+void ingresarInforme() {
+    while (resp == 's') {
+        printf("*MINISTERIO DE LA SALUD DE LA PROVINCIA DE CORRIENTES*\n\n");
+        printf("INGRESE SU DNI: ");
+        scanf("%d", &dni);
+        system("clear");
+
+        printf("*MINISTERIO DE LA SALUD DE LA PROVINCIA DE CORRIENTES*\n\n");
+        printf("INGRESE SU EDAD: ");
+        scanf("%d", &edad);
+        system("clear");
+
+        printf("*MINISTERIO DE LA SALUD DE LA PROVINCIA DE CORRIENTES*\n\n");
+        printf("INGRESE EL TIPO DE VACUNA.\n\n");
+        printf("(1- Covid, 2- Antigripal)\n\n");
+        printf("INGRESE AQUI: ");
+        scanf("%d", &vacuna);
+        system("clear");
+
+        if (vacuna == 1) {
+            contCovid += i;
+        }
+        else if (vacuna == 2) {
+            contGripe += i;
+        }
+
+        printf("*MINISTERIO DE LA SALUD DE LA PROVINCIA DE CORRIENTES*\n\n");
+        printf("INGRESE NRO DE DOSIS: ");
+        scanf("%d", &nroDosis);
+        system("clear");
+
+        if (edad < 18) {
+            contMenores++;
+            if (vacuna == 1 && nroDosis == 5) {
+                contMenoresVacuna += i;
+            }
+        }
+
+        printf("*MINISTERIO DE LA SALUD DE LA PROVINCIA DE CORRIENTES*\n\n");
+        printf("INGRESE EL LUGAR DE VACUNACION (1-CAP, 2-Facultad de Medicina).\n\n");
+        printf("INGRESE AQUI: ");
+        scanf("%d", &lugarVacunacion);
+        system("clear");
+
+        iniciarPrograma();
+    }
+}
+
+void calcularPorcentaje() {
+    if (contCovid > 0) {
+        porcentaje = (contMenoresVacuna * 100.0) / contCovid;
+    }
+}
+
+void mostrarInforme() {
+    printf("------------------------------------------\n\n");
+    printf("CAMPAÑA DE VACUNACION - PROVINCIA DE CORRIENTES.\n\n");
+    printf("------------------------------------------\n\n");
+    printf("Total de vacunas Covid aplicadas: %d\n", contCovid);
+    printf("Total de vacunas Antigripales aplicadas: %d\n", contGripe);
+    printf("Total de menores de edad vacunados: %d\n", contMenores);
+    printf("Total de menores de edad con 5 dosis de la vacuna Covid: %d\n", contMenoresVacuna);
+    printf("Porcentaje de menores de edad con 5 dosis de la vacuna Covid: %.2f%%\n", porcentaje);
+}
